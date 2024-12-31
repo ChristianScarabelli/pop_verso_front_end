@@ -1,15 +1,21 @@
+import { Link } from "react-router-dom"
+import { useContext } from "react"
+import charactersContext from "../contexts/character"
+
 export default function List() {
+    const { list } = useContext(charactersContext)
+
     return (
         <section>
-            <div className="text-white">
-                <p>lista dei personaggi</p>
-                <p>lista dei personaggi</p>
-                <p>lista dei personaggi</p>
-                <p>lista dei personaggi</p>
-                <p>lista dei personaggi</p>
-                <p>lista dei personaggi</p>
-            </div>
+            <ul className="text-white list-group">
+                {
+                    list.map((character) => (
+                        <li key={character.id} className="list-group-item">
+                            <Link to={`/characters/${character.id}`}>{character.name}</Link>
+                        </li>
+                    ))
+                }
+            </ul>
         </section>
-
     )
 }

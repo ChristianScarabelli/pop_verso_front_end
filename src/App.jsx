@@ -1,5 +1,8 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 
+// context
+import { CharactersProvider } from "./contexts/character.jsx"
+
 // layouts
 import DefaultLayout from './layouts/DefaultLayout.jsx'
 import BlankLayout from './layouts/BlankLayout.jsx'
@@ -13,7 +16,7 @@ import Show from './pages/Show.jsx'
 function App() {
 
   return (
-    <>
+    <CharactersProvider>
       <BrowserRouter>
         <Routes>
           <Route element={<DefaultLayout />}>
@@ -33,7 +36,8 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </>
+    </CharactersProvider>
+
   )
 }
 
