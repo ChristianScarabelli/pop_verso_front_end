@@ -19,10 +19,10 @@ export default function Card() {
     return (
         <section>
             <div className="card p-3">
-                <h1>Name: {characterDetails.name}</h1>
-                <span>Age: {characterDetails.age}</span>
-                <span>Shadow: {characterDetails.shadow}</span>
-                <p>Description: {characterDetails.description}</p>
+                <h1 className="card-title">Name: {characterDetails.name}</h1>
+                <span className="card-subtitle">Age: {characterDetails.age}</span>
+                <span className="card-subtitle">Shadow agent: {characterDetails.shadow}</span>
+                <p className="card-text">Description: {characterDetails.description}</p>
             </div>
         </section>
     )

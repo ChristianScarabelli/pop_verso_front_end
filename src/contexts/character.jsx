@@ -30,19 +30,48 @@ export const CharactersProvider = ({ children }) => {
     function fetchDetails(id) {
         axios.get(`${BASE_URI}/characters/${id}`)
             .then((res) => {
-                setCharacterDetails(res.data)
+                const mappedDetails = {
+                    ...res.data,
+                    shadow: res.data.shadow === 0 ? 'Yes' : 'No'
+                }
+                setCharacterDetails(mappedDetails)
             })
             .catch((err) => console.error('Issues in details fetching', err));
     }
 
-    // fetch della lista solo al primo riavvio
+    // stato per la lista dei personaggi
+    const [teamsList, setTeamsList] = useState([])
+
+    // funzione di chiamata per la lista
+    function fetchTeams() {
+        axios.get(`${BASE_URI}/teams`)
+            .then(res => {
+                setTeamsList(res.data)
+            })
+            .catch(err => console.error('Issues in teams fetching', err))
+    }
+
+
+    // stato per i dettagli del personaggio
+    const [teamDetails, setTeamDetails] = useState({})
+
+    // funzione di chiamata per i dettagli del singolo personaggio
+    function fetchTeamDetails(id) {
+        axios.get(`${BASE_URI}/teams/${id}`)
+            .then((res) => {
+                setTeamDetails(res.data)
+            })
+            .catch((err) => console.error('Issues in team details fetching', err));
+    }
+    // fetch della lista personaggi e dei teams solo al primo riavvio
     useEffect(() => {
         fetchList()
+        fetchTeams()
     }, [])
 
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails }}>
+        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails }}>
             {children}
         </charactersContext.Provider>
     )
