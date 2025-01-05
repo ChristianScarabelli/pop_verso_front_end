@@ -26,10 +26,10 @@ function App() {
               <Route index element={<Index />} />
               <Route path=":id" element={<Show />} />
             </Route>
-            {/* <Route path='/teams'>
+            <Route path='/teams'>
               <Route index element={<Index />}></Route>
               <Route path=':id' element={<Show />}></Route>
-            </Route> */}
+            </Route>
           </Route>
           <Route element={<BlankLayout />}>
             <Route path='*' element={<NotFound />}></Route>
@@ -37,7 +37,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </CharactersProvider>
-
   )
 }
 

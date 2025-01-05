@@ -1,17 +1,15 @@
 import { Link } from "react-router-dom"
-import { useContext } from "react"
-import charactersContext from "../contexts/character"
 
-export default function List() {
-    const { list } = useContext(charactersContext)
+export default function List({ data = [], basePath }) {
 
     return (
         <section>
             <ul className="text-white list-group">
                 {
-                    list.map((character) => (
-                        <li key={character.id} className="list-group-item">
-                            <Link to={`/characters/${character.id}`}>{character.name}</Link>
+                    data.map((item) => (
+                        <li key={item.id} className="list-group-item">
+                            {/* link dinamico con props basePath a cui corrisponderà lo useLocation() con la lista dei dati (team o character) */}
+                            <Link to={`/${basePath}/${item.id}`}>{item.name}</Link>
                         </li>
                     ))
                 }

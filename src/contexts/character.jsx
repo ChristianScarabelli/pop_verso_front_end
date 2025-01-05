@@ -22,13 +22,13 @@ export const CharactersProvider = ({ children }) => {
             .catch(err => console.error('Issues in list fetching', err))
     }
 
-
     // stato per i dettagli del personaggio
     const [characterDetails, setCharacterDetails] = useState({})
 
     // funzione di chiamata per i dettagli del singolo personaggio
     function fetchDetails(id) {
         axios.get(`${BASE_URI}/characters/${id}`)
+
             .then((res) => {
                 const mappedDetails = {
                     ...res.data,
@@ -36,7 +36,7 @@ export const CharactersProvider = ({ children }) => {
                 }
                 setCharacterDetails(mappedDetails)
             })
-            .catch((err) => console.error('Issues in details fetching', err));
+            .catch((err) => console.error('Issues in team details fetching:'))
     }
 
     // stato per la lista dei personaggi
@@ -50,7 +50,6 @@ export const CharactersProvider = ({ children }) => {
             })
             .catch(err => console.error('Issues in teams fetching', err))
     }
-
 
     // stato per i dettagli del personaggio
     const [teamDetails, setTeamDetails] = useState({})
@@ -71,7 +70,7 @@ export const CharactersProvider = ({ children }) => {
 
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails }}>
+        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails }}>
             {children}
         </charactersContext.Provider>
     )
