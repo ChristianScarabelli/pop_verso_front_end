@@ -6,6 +6,7 @@ export default function List({ data = [], basePath }) {
         <section>
             <ul className="text-white list-group">
                 {
+                    data &&
                     data.map((item) => (
                         <li key={item.id} className="list-group-item">
                             {/* link dinamico con props basePath a cui corrisponderà lo useLocation() con la lista dei dati (team o character) */}

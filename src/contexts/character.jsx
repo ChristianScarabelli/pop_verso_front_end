@@ -68,9 +68,49 @@ export const CharactersProvider = ({ children }) => {
         fetchTeams()
     }, [])
 
+    // oggetto vuoto per il form
+    const initialFormData = {
+        name: '',
+        age: '',
+        description: '',
+        shadow: '',
+    }
+
+    // stato per i dati del form
+    const [formData, setFormData] = useState(initialFormData)
+
+    // funzione onChange degli input
+    function onChange(e) {
+        const { value, checked, type, name } = e.target
+
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value
+        })
+    }
+
+    // funzione per il submit del form
+    function onSubmit(e) {
+        e.preventDefault()
+        storeNewCharacter()
+        setFormData(initialFormData)
+    }
+
+    console.log('Payload:', formData);
+    // funzione/chiamata per aggiungere un nuovo personaggio
+    function storeNewCharacter() {
+        axios.post(`${BASE_URI}/characters`, formData)
+            .then(res => {
+                console.log('Response from API:', res.data); // Log dettagliato
+                fetchList()
+                setFormData(initialFormData)
+            })
+            .catch(err => console.error(err))
+    }
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails }}>
+        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )
