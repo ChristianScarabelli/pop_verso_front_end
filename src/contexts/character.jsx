@@ -135,9 +135,21 @@ export const CharactersProvider = ({ children }) => {
         console.log('Search value:', e.target.value)
     }
 
+    // funzione per eliminare un personaggio
+    function deleteCharacter(id) {
+
+        axios.delete(`${BASE_URI}/characters/${id}`)
+            .then(res => {
+                fetchList()
+            })
+            .catch(err => {
+                console.error('Error deleting character:', err)
+            })
+    }
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )
