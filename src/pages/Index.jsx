@@ -4,12 +4,17 @@ import charactersContext from "../contexts/character"
 
 export default function Index() {
 
-    const { list, teamsList, formData, onChange, onSubmit } = useContext(charactersContext)
+    const { handleSearch, search, onSearch, list, teamsList, formData, onChange, onSubmit } = useContext(charactersContext)
 
     return (
         <main className='bg-dark py-3 min-height-100vh'>
             <div className="container">
                 <h2 className='text-white text-center my-2'>Personaggi del Pop Verso</h2>
+                <div className='my-3 w-50 ms-auto'>
+                    <form onSubmit={onSearch}>
+                        <input type="text" value={search} onChange={handleSearch} name='search' className="form-control" id="search" placeholder="Cerca personaggi..." />
+                    </form>
+                </div>
                 <List data={list} basePath='characters' />
             </div>
             <section>

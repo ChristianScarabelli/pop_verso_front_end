@@ -4,7 +4,8 @@ export default function List({ data = [], basePath }) {
 
     return (
         <section>
-            <ul className="text-white list-group">
+
+            <ul className="container text-white list-group">
                 {
                     data &&
                     data.map((item) => (

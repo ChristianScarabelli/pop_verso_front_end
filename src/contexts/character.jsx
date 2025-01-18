@@ -15,7 +15,11 @@ export const CharactersProvider = ({ children }) => {
 
     // funzione di chiamata per la lista
     function fetchList() {
-        axios.get(`${BASE_URI}/characters`)
+        axios.get(`${BASE_URI}/characters`, {
+            params: {
+                search: search,
+            }
+        })
             .then(res => {
                 setList(res.data)
             })
@@ -44,7 +48,11 @@ export const CharactersProvider = ({ children }) => {
 
     // funzione di chiamata per la lista
     function fetchTeams() {
-        axios.get(`${BASE_URI}/teams`)
+        axios.get(`${BASE_URI}/teams`, {
+            params: {
+                search: search,
+            }
+        })
             .then(res => {
                 setTeamsList(res.data)
             })
@@ -52,7 +60,7 @@ export const CharactersProvider = ({ children }) => {
     }
 
     // stato per i dettagli del personaggio
-    const [teamDetails, setTeamDetails] = useState({})
+    const [teamDetails, setTeamDetails] = useState([])
 
     // funzione di chiamata per i dettagli del singolo personaggio
     function fetchTeamDetails(id) {
@@ -108,9 +116,28 @@ export const CharactersProvider = ({ children }) => {
             .catch(err => console.error(err))
     }
 
+    // SEARCH BAR
+    // stato per la ricerca
+    const [search, setSearch] = useState('')
+
+    // funzione submit di ricerca
+    function onSearch(e) {
+        e.preventDefault()
+        console.log('Search:', search);
+        fetchList()
+        fetchTeams()
+        setSearch('')
+    }
+
+    // funzione per gestire ricerca
+    function handleSearch(e) {
+        setSearch(e.target.value)
+        console.log('Search value:', e.target.value)
+    }
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )
