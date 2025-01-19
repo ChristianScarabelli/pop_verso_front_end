@@ -196,9 +196,19 @@ export const CharactersProvider = ({ children }) => {
         setInHover(isHovering ? id : null)
     }
 
+
+    // STATO PER NASCONDERE IL FORM
+    const [isShown, setIsShown] = useState(false)
+
+    // funzione per nascondere il form
+    function toggleElement() {
+        setIsShown(!isShown)
+    }
+
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ handleHover, inHover, setInHover, isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ toggleElement, isShown, handleHover, inHover, setInHover, isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )
