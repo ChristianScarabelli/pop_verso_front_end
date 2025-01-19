@@ -2,6 +2,7 @@ import Card from "../components/Card"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useContext, useEffect } from "react"
 import charactersContext from "../contexts/character"
+import { HomeIcon } from "@heroicons/react/20/solid"
 
 export default function Show() {
 
@@ -26,7 +27,6 @@ export default function Show() {
         }
     }, [id, pathname]);
 
-
     const data = pathname.includes('characters') ? characterDetails : teamDetails
 
     return (
@@ -34,7 +34,7 @@ export default function Show() {
             <div className="container">
                 <h2 className="text-center text-white">Skills card</h2>
                 <div className="d-flex pb-3">
-                    <button onClick={() => navigate(-1)} className="btn btn-light btn-sm">Go back</button>
+                    <button onClick={() => navigate(-1)} className="btn btn-primary btn-sm"><HomeIcon style={{ width: '24px', height: '24px' }} /></button>
                 </div>
                 <Card data={data} />
             </div>

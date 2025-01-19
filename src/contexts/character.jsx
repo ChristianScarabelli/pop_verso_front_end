@@ -7,14 +7,17 @@ const charactersContext = createContext()
 // url base
 const BASE_URI = 'http://localhost:3000'
 
-
 // funzione/componente PROVIDER del context, con le funzioni
 export const CharactersProvider = ({ children }) => {
+
     // stato per la lista dei personaggi
     const [list, setList] = useState([])
 
     // funzione di chiamata per la lista
     function fetchList() {
+
+        setIsLoading(true)
+
         axios.get(`${BASE_URI}/characters`, {
             params: {
                 search: search,
@@ -24,6 +27,7 @@ export const CharactersProvider = ({ children }) => {
                 setList(res.data)
             })
             .catch(err => console.error('Issues in list fetching', err))
+            .finally(() => setIsLoading(false))
     }
 
     // stato per i dettagli del personaggio
@@ -31,6 +35,9 @@ export const CharactersProvider = ({ children }) => {
 
     // funzione di chiamata per i dettagli del singolo personaggio
     function fetchDetails(id) {
+
+        setIsLoading(true)
+
         axios.get(`${BASE_URI}/characters/${id}`)
 
             .then((res) => {
@@ -41,6 +48,7 @@ export const CharactersProvider = ({ children }) => {
                 setCharacterDetails(mappedDetails)
             })
             .catch((err) => console.error('Issues in team details fetching:'))
+            .finally(() => setIsLoading(false))
     }
 
     // stato per la lista dei personaggi
@@ -48,6 +56,9 @@ export const CharactersProvider = ({ children }) => {
 
     // funzione di chiamata per la lista
     function fetchTeams() {
+
+        setIsLoading(true)
+
         axios.get(`${BASE_URI}/teams`, {
             params: {
                 search: search,
@@ -57,18 +68,23 @@ export const CharactersProvider = ({ children }) => {
                 setTeamsList(res.data)
             })
             .catch(err => console.error('Issues in teams fetching', err))
+            .finally(() => setIsLoading(false))
     }
 
     // stato per i dettagli del personaggio
     const [teamDetails, setTeamDetails] = useState([])
 
-    // funzione di chiamata per i dettagli del singolo personaggio
+    // funzione di chiamata per i dettagli del singolo team
     function fetchTeamDetails(id) {
+
+        setIsLoading(true)
+
         axios.get(`${BASE_URI}/teams/${id}`)
             .then((res) => {
                 setTeamDetails(res.data)
             })
-            .catch((err) => console.error('Issues in team details fetching', err));
+            .catch((err) => console.error('Issues in team details fetching', err))
+            .finally(() => setIsLoading(false))
     }
     // fetch della lista personaggi e dei teams solo al primo riavvio
     useEffect(() => {
@@ -102,11 +118,17 @@ export const CharactersProvider = ({ children }) => {
         e.preventDefault()
         storeNewCharacter()
         setFormData(initialFormData)
+        setIsLoading(true)
     }
 
     console.log('Payload:', formData);
+
+
     // funzione/chiamata per aggiungere un nuovo personaggio
     function storeNewCharacter() {
+
+        setIsLoading(true)
+
         axios.post(`${BASE_URI}/characters`, formData)
             .then(res => {
                 console.log('Response from API:', res.data); // Log dettagliato
@@ -114,11 +136,15 @@ export const CharactersProvider = ({ children }) => {
                 setFormData(initialFormData)
             })
             .catch(err => console.error(err))
+            .finally(() =>
+                setIsLoading(false)
+            )
     }
 
     // SEARCH BAR
     // stato per la ricerca
     const [search, setSearch] = useState('')
+
 
     // funzione submit di ricerca
     function onSearch(e) {
@@ -137,19 +163,30 @@ export const CharactersProvider = ({ children }) => {
 
     // funzione per eliminare un personaggio
     function deleteCharacter(id) {
+        if (confirm('Are you sure to delete this character?')) {
 
-        axios.delete(`${BASE_URI}/characters/${id}`)
-            .then(res => {
-                fetchList()
-            })
-            .catch(err => {
-                console.error('Error deleting character:', err)
-            })
+            setIsLoading(true)
+
+            axios.delete(`${BASE_URI}/characters/${id}`)
+                .then(res => {
+                    fetchList()
+                })
+                .catch(err => {
+                    console.error('Error deleting character:', err)
+                })
+                .finally(() =>
+                    setIsLoading(false)
+                )
+        }
     }
+
+    // PAGE LOADER
+    // stato per il caricamento
+    const [isLoading, setIsLoading] = useState(false)
 
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )

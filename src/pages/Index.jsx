@@ -15,7 +15,12 @@ export default function Index() {
                         <input type="text" value={search} onChange={handleSearch} name='search' className="form-control" id="search" placeholder="Cerca personaggi..." />
                     </form>
                 </div>
-                <List data={list} basePath='characters' />
+                {list.length > 0 ? (
+                    <List data={list} basePath='characters' />
+                ) : (<div className='text-center my-5'>
+                    <span className='text-light'>No character found...</span>
+                </div>)
+                }
             </div>
             <section>
                 <div className="container">
