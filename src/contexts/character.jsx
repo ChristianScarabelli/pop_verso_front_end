@@ -184,9 +184,21 @@ export const CharactersProvider = ({ children }) => {
     // stato per il caricamento
     const [isLoading, setIsLoading] = useState(false)
 
+
+
+    // STATO PER L'HOVER
+    const [inHover, setInHover] = useState(false)
+
+    // Funzione per gestire l'hover
+    // accetto l'id degli elementi ciclati, e determino se l'hover è in atto,
+    //  settando il suo stato
+    const handleHover = (id, isHovering) => {
+        setInHover(isHovering ? id : null)
+    }
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ handleHover, inHover, setInHover, isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )
