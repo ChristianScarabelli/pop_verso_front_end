@@ -17,7 +17,7 @@ export default function List({ data = [], basePath }) {
                             {/* link dinamico con props basePath a cui corrisponderà lo useLocation() con la lista dei dati (team o character) */}
                             <Link style={{ textDecoration: 'none' }} className="text-body-secondary" to={`/${basePath}/${item.id}`}>{item.name}</Link>
                             {inHover === item.id && (
-                                <button onClick={() => deleteCharacter(item.id)} className="btn btn-danger btn-sm">
+                                <button onClick={() => deleteCharacter(item.id)} className="btn btn-danger btn-sm animate__animated animate__bounceIn animate__faster">
                                     <TrashIcon style={{ width: '18px', height: '18px' }} />
                                 </button>
                             )}
