@@ -206,9 +206,18 @@ export const CharactersProvider = ({ children }) => {
     }
 
 
+
+    // STATO PER LA DARK MODE
+    const [isDarkMode, setIsDarkMode] = useState(false)
+
+    // funzione per attivare dark mode
+    function toggleDarkMode() {
+        setIsDarkMode(!isDarkMode)
+    }
+
     // passo le funzioni e stati tramite il provider
     return (
-        <charactersContext.Provider value={{ toggleElement, isShown, handleHover, inHover, setInHover, isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
+        <charactersContext.Provider value={{ toggleDarkMode, setIsDarkMode, isDarkMode, toggleElement, isShown, handleHover, inHover, setInHover, isLoading, setIsLoading, deleteCharacter, search, handleSearch, onSearch, list, fetchList, fetchDetails, characterDetails, setCharacterDetails, teamsList, fetchTeams, fetchTeamDetails, teamDetails, setTeamDetails, formData, onChange, onSubmit }}>
             {children}
         </charactersContext.Provider>
     )

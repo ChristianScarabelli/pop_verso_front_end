@@ -12,7 +12,7 @@ export default function Show() {
     // determino il tipo di rotta corrente
     const { pathname } = useLocation()
 
-    const { fetchDetails, characterDetails, setCharacterDetails, setTeamDetails, teamDetails, fetchTeamDetails } = useContext(charactersContext)
+    const { isDarkMode, fetchDetails, characterDetails, setCharacterDetails, setTeamDetails, teamDetails, fetchTeamDetails } = useContext(charactersContext)
 
     const navigate = useNavigate()
 
@@ -30,9 +30,9 @@ export default function Show() {
     const data = pathname.includes('characters') ? characterDetails : teamDetails
 
     return (
-        <section className="bg-dark vh-100 py-4">
+        <section className={`bg-secondary-emphasis vh-100 py-4 ${isDarkMode && 'bg-dark'}`}>
             <div className="container">
-                <h2 className="text-center text-white">Skills card</h2>
+                <h2 className="text-center text-secondary">Skills card</h2>
                 <div className="d-flex pb-3">
                     <button onClick={() => navigate(-1)} className="btn btn-primary btn-sm"><HomeIcon style={{ width: '24px', height: '24px' }} /></button>
                 </div>

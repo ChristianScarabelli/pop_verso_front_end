@@ -4,12 +4,12 @@ import charactersContext from "../contexts/character"
 
 export default function Index() {
 
-    const { toggleElement, isShown, handleSearch, search, onSearch, list, teamsList, formData, onChange, onSubmit } = useContext(charactersContext)
+    const { toggleDarkMode, isDarkMode, toggleElement, isShown, handleSearch, search, onSearch, list, teamsList, formData, onChange, onSubmit } = useContext(charactersContext)
 
     return (
-        <main className='bg-dark py-3 min-height-100vh'>
+        <main className={`py-3 min-height-100vh ${isDarkMode && 'bg-dark'}`}>
             <div className="container">
-                <h2 className='text-white text-center my-3'>Personaggi del Pop Verso</h2>
+                <h2 className='text-secondary text-center my-3'>Personaggi del Pop Verso</h2>
                 <div className='mt-5 mb-3 d-flex align-items-center justify-content-between'>
                     {isShown ? (
                         <button onClick={toggleElement} style={{ aspectRatio: '1/1' }} className='d-flex align-items-center justify-content-center btn btn-primary fs-2'>-</button>
@@ -21,7 +21,7 @@ export default function Index() {
                     }
 
                     <form onSubmit={onSearch}>
-                        <input type="text" value={search} onChange={handleSearch} name='search' className="form-control" id="search" placeholder="Cerca personaggi..." />
+                        <input type="text" value={search} onChange={handleSearch} name='search' className={`form-control bg-secondary-subtle ${isDarkMode && ''}`} id="search" placeholder="Cerca personaggi..." />
                     </form>
                 </div>
                 {/* Form */}
@@ -30,20 +30,20 @@ export default function Index() {
                         <h2 className='text-center text-white mt-3 '>Aggiungi un nuovo personaggio</h2>
                         <form onSubmit={onSubmit} className='row g-1'>
                             <div className="col-12">
-                                <label htmlFor="name" className="form-label text-white">Nome</label>
-                                <input type="text" value={formData.name} onChange={onChange} name='name' className="form-control" id="name" placeholder="Inserisci nome e cognome..." required />
+                                <label htmlFor="name" className={`form-label text-secondary ${isDarkMode && 'text-white'}`}>Nome</label>
+                                <input type="text" value={formData.name} onChange={onChange} name='name' className={`form-control bg-secondary-subtle ${isDarkMode && 'text-bg-dark'}`} id="name" placeholder="Inserisci nome e cognome..." required />
                             </div>
                             <div className="col-12">
-                                <label htmlFor="description" className="form-label text-white">Descrizione</label>
-                                <textarea className="form-control" value={formData.description} onChange={onChange} name='description' id="description" placeholder="Descrivi il personaggio..." required></textarea>
+                                <label htmlFor="description" className={`form-label text-secondary ${isDarkMode && 'text-white'}`} >Descrizione</label>
+                                <textarea className={`form-control bg-secondary-subtle ${isDarkMode && 'text-bg-dark'}`} value={formData.description} onChange={onChange} name='description' id="description" placeholder="Descrivi il personaggio..." required></textarea>
                             </div>
                             <div className="col-6">
-                                <label htmlFor="age" className="form-label text-white">Age</label>
-                                <input type="number" name='age' value={formData.age} onChange={onChange} className="form-control" id="age" required />
+                                <label htmlFor="age" className={`form-label text-secondary ${isDarkMode && 'text-light'}`}>Age</label>
+                                <input type="number" name='age' value={formData.age} onChange={onChange} className={`form-control bg-secondary-subtle ${isDarkMode && 'text-bg-dark'}`} id="age" required />
                             </div>
                             <div className="col-6">
-                                <label htmlFor="shadow" className="form-label text-white">Shadow</label>
-                                <select id="shadow" name='shadow' value={formData.shadow} onChange={onChange} className="form-select" required >
+                                <label htmlFor="shadow" className={`form-label text-secondary ${isDarkMode && 'text-light'}`}>Shadow</label>
+                                <select id="shadow" name='shadow' value={formData.shadow} onChange={onChange} className={`form-control bg-secondary-subtle ${isDarkMode && 'text-bg-dark'}`} required >
                                     <option defaultValue>Choose...</option>
                                     <option value={0}>Yes</option>
                                     <option value={1}>No</option>
@@ -64,7 +64,7 @@ export default function Index() {
             </div>
             <section className='py-4'>
                 <div className="container">
-                    <h2 className='text-white text-center my-3'>Teams del Pop Verso</h2>
+                    <h2 className='text-secondary text-center my-3'>Teams del Pop Verso</h2>
                     <List data={teamsList} basePath='teams' />
                 </div>
             </section>

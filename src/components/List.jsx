@@ -5,11 +5,11 @@ import charactersContext from "../contexts/character"
 
 export default function List({ data = [], basePath }) {
 
-    const { handleHover, inHover, setInHover, deleteCharacter } = useContext(charactersContext)
+    const { handleHover, inHover, deleteCharacter } = useContext(charactersContext)
 
     return (
         <section>
-            <ul className="container text-white list-group">
+            <ul className="container text-secondary list-group">
                 {
                     data &&
                     data.map((item) => (
